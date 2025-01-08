@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Top</title>
+  </head>
+  <body>
+    <h1>Top</h1>
+    <form th:action="@{/top}" method="post">
+      <a th:href="@{/login}">ログイン画面に戻る。</a>
+      <input type="submit" value="Submit" />
+    </form>
+  </body>
+</html>

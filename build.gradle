@@ -1,0 +1,170 @@
+// プラグインの設定
+plugins {
+
+	// Javaを使用するための設定
+	id 'java'
+
+	// SpringBootを使用するための設定
+	id 'org.springframework.boot' version '3.4.1'
+
+	// 依存関係管理を使用するための設定
+	id 'io.spring.dependency-management' version '1.1.6'
+
+	// カバレッジツール(jacoco)を使用するための設定
+	id 'jacoco'
+
+	// spotbugsを使用するための設定
+	id 'com.github.spotbugs' version '6.0.26'
+}
+
+// 本設定ファイルが対象とするグループ
+group = 'com.sb'
+
+// バージョン設定
+version = '0.0.1-SNAPSHOT'
+
+// Javaの設定
+java {
+
+	// Java 21 を使用する設定
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+// コンフィグ(lombokを使用するために必要なannotationProcessorを設定)
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+// リポジトリ設定
+repositories {
+
+	// mavenCentralを参照して資材を取得する
+	mavenCentral()
+}
+
+// 依存関係の設定
+dependencies {
+
+	// メール機能を使用するための設定
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	// AWS SESを使用できるようにするための設定
+	implementation 'io.awspring.cloud:spring-cloud-starter-aws-ses:2.4.4'
+
+	// thymeleafを使用するための設定
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+	// バリデーションを使用するための設定
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	// Webアプリを使用するための設定
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// MyBatisを使用するための設定
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+
+	// SpringSessionを使用するための設定
+	implementation 'org.springframework.session:spring-session-core'
+
+	// lombokを使用するための設定
+	compileOnly 'org.projectlombok:lombok'
+
+	// devtoolsを使用するための設定
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	// h2DBを使用するための設定
+	runtimeOnly 'com.h2database:h2'
+
+	// lombokを使用するための設定
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// POIを使用するための設定
+	implementation 'org.apache.poi:poi:5.3.0'
+	implementation 'org.apache.poi:poi-ooxml:5.3.0'
+
+	// SpringBootTestを使用するための設定
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+
+	// JUnitを使用するための設定
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// SpringSecurityを使用するための設定
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+	testImplementation 'org.springframework.security:spring-security-test'
+
+	// redisを使用するための設定
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'org.springframework.session:spring-session-data-redis'
+
+	// Mockitoを使用するための設定
+	testImplementation 'org.mockito:mockito-core:5.14.2'
+
+	// SpringDocを使用するための設定
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
+
+	// ライブラリプロジェクトを使用するための設定
+	implementation project(':sbwap_sblib')
+}
+
+// テストタスクの設定
+tasks.named('test') {
+
+	// JUnitプラットフォームを使用してテストを行う
+	useJUnitPlatform()
+
+	// jacocoによるカバレッジ測定を行う
+	finalizedBy jacocoTestReport
+}
+
+// jacocoのレポートから特定のクラスを除外する場合は、次のような設定を記述する
+//// jacocoのレポートから除外するクラスファイルを定義
+//def jacocoExcludeFiles = [
+//	'**/[パッケージ名]/*', // この設定方法だと、特定パッケージ配下の全てのクラスが除外対象となる
+//	'**/[パッケージ名]/[クラス名].class' // この設定方法だと、特定パッケージ配下の特定のクラスだけが除外対象となる
+//]
+
+// jacoco設定
+jacocoTestReport {
+
+	// テストに依存(連動)して動作するよう設定する
+	dependsOn test
+
+// jacocoのレポートから特定のクラスを除外する場合は、次のような設定を記述する
+//	// JUnitでテストできないクラスを除外する
+//	afterEvaluate {
+//		classDirectories.setFrom(classDirectories.files.collect {
+//			fileTree(
+//					dir: it,
+//					excludes: jacocoExcludeFiles)
+//		})
+//	}
+}
+
+// spotbugs設定
+spotbugs {
+
+	// ツールバージョンを指定する
+	toolVersion = '4.8.3'
+
+	// 「test」配下の資材はspotbugsによる検査の対象外とする
+	spotbugsTest.enabled = false
+
+	// lombokクラスで「内部表現を暴露～」というエラーが出ないようにする
+	omitVisitors = ["FindReturnRef"]
+
+	// 「main」配下の資材は、次の設定とする
+	spotbugsMain {
+		reports {
+			html {
+				enabled = true
+				stylesheet = 'fancy-hist.xsl'
+			}
+		}
+	}
+}
