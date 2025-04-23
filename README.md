@@ -50,17 +50,17 @@ implementation project(':sbwap_sblib')
 	mkdir C:\10_local\project\submodule
 ```
 
-- 最初に親となる「sbwap」をクローンする。(コマンドはGitBashにて実行する)
+- 最初に親となるプロジェクト(ここでは「sbwap」)をクローンする。(コマンドはGitBashにて実行する)
 ```
 	git clone [Gitリポジトリ]
 	＜例＞
-	git clone https://github.com/suteado90573/sbwap
+	git clone https://github.com/freedomRemains/sbwap
 ```
 
-- 親の「sbwap」ディレクトリにてGitBash上から、次のコマンドを実行する。
+- 親プロジェクト(「sbwap」)のディレクトリにてGitBash上から、次のコマンドを実行する。
 ```
 	cd sbwap/
-	git submodule add https://github.com/suteado90573/sblib sblib
+	git submodule add https://github.com/freedomRemains/sblib sblib
 	※　子である「sblib」のリポジトリを「sblib」というエイリアス名で、
 		サブモジュールとするコマンドを実行。
 		git submodule add [リポジトリ] [エイリアス]
@@ -96,15 +96,15 @@ implementation project(':sbwap_sblib')
 	mkdir C:\10_local\project\dev
 ```
 
-- 最初に親となる「sbwap」をクローンする。(コマンドはGitBashにて実行する)
+- 最初に親プロジェクト(ここでは「sbwap」)をクローンする。(コマンドはGitBashにて実行する)
 ```
 	git clone [Gitリポジトリ]
 	＜例＞
-	git clone https://github.com/suteado90573/sbwap
+	git clone https://github.com/freedomRemains/sbwap
 ```
 
-- 「sbwap」ディレクトリ直下に「sblib」ディレクトリと「.gitmodules」が生成されたことを確認。  
-「sblib」ディレクトリはリポジトリ資材、「.gitmodules」はサブモジュールコマンドの内容が書かれている。
+- 親プロジェクト(「sbwap」)のディレクトリ直下に、子プロジェクト(「sblib」)のディレクトリと「.gitmodules」が生成されたことを確認。  
+子プロジェクト(「sblib」)のディレクトリはリポジトリ資材、「.gitmodules」はサブモジュールコマンドの内容が書かれている。
 
 - 続けてGitBash上から、次のコマンドを実行する。
 ```
@@ -149,7 +149,7 @@ spring.config.import=custom.properties
 - 【ToDo】サンプル及び記載を追加する。
 
 ---
-# Gradleビルドが出る場合の対応について
+# Gradleビルドでテストエラーが出る場合の対応について
 Gradleビルド時にテストエラーとなってしまう場合の対応は、次の通り。
 - テストエラーを確認する。
 - インジェクションするクラスが存在しないというエラーの場合、  
