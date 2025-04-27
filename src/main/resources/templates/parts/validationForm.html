@@ -1,0 +1,39 @@
+  <div th:fragment="validationForm">
+    <form id="validationForm" th:action="@{/validation}" th:object="${validationForm}" method="post">
+      <a th:href="@{/top}">TOP画面に戻る。</a>
+      <div>
+        <div>
+          <label>親の名前：</label>
+          <input type="text" th:field="*{name}" />
+          <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">名前エラー</div>
+        </div>
+
+        <div th:each="child, childStat : *{childList}">
+          <label>子の名前：</label>
+          <input type="text" th:field="*{childList[__${childStat.index}__].childName}" />
+          <div th:if="${#fields.hasErrors('childList[' + childStat.index + '].childName')}"
+             th:errors="*{childList[__${childStat.index}__].childName}">子エラー</div>
+
+          <div th:each="grand, grandChildStat : *{childList[__${childStat.index}__].grandChildList}">
+            <label>孫の名前：</label>
+            <input type="text" th:field="*{childList[__${childStat.index}__].grandChildList[__${grandChildStat.index}__].grandChildName}" />
+            <div th:if="${#fields.hasErrors('childList[' + childStat.index + '].grandChildList[' + grandChildStat.index + '].grandChildName')}"
+               th:errors="*{childList[__${childStat.index}__].grandChildList[__${grandChildStat.index}__].grandChildName}">孫エラー</div>
+          </div>
+        </div>
+
+        <label>全てのエラー</label>
+        <ul>
+          <li th:each="err : ${#fields.errors('*')}" th:text="${err}">エラー表示</li>
+        </ul>
+      </div>
+
+      <input type="submit" value="Submit" />
+    </form>
+
+    <button id="btnCallApi">API呼び出し</button>
+    <div id="resultMessage"></div>
+    <div>
+      <textarea id="errorMessage" rows="10" cols="50" readonly></textarea>
+    </div>
+  </div>

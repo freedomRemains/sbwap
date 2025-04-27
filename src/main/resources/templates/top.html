@@ -7,6 +7,13 @@
     <h1>Top</h1>
     <form th:action="@{/top}" method="post">
       <a th:href="@{/login}">ログイン画面に戻る。</a>
+      <table border="1">
+        <tbody>
+          <tr>
+            <td><a th:href="@{/validation}">バリデーションテスト</a></td>
+          </tr>
+        </tbody>
+      </table>
       <input type="submit" value="Submit" />
     </form>
   </body>
