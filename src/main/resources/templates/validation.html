@@ -3,17 +3,13 @@
   <head>
     <title>バリデーション</title>
     <link rel="stylesheet" th:href="@{/css/common.css}">
-  </head>
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+</head>
   <body>
     <h1>バリデーション</h1>
-    <form th:action="@{/validation}" th:object="${validationDto}" method="post">
-      <a th:href="@{/top}">TOP画面に戻る。</a>
 
-      <div th:replace="~{parts/validationArea :: validationArea(${validationDto})}"></div>
-
-      <input type="submit" value="Submit" />
-      <button id="btnCallApi">API呼び出し</button>
-    </form>
+    <div th:replace="~{parts/validationForm :: validationForm}"></div>
 
     <script th:src="@{/js/common.js}"></script>
   </body>

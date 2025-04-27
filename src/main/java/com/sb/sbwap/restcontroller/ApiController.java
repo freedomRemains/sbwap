@@ -1,20 +1,16 @@
 package com.sb.sbwap.restcontroller;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.SmartValidator;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.thymeleaf.context.Context;
-import org.thymeleaf.spring6.SpringTemplateEngine;
 
-import com.sb.sbwap.dto.ChildDto;
-import com.sb.sbwap.dto.GrandChildDto;
-import com.sb.sbwap.dto.ValidationDto;
+import com.sb.sblib.util.ValidationUtil;
+import com.sb.sbwap.form.ValidationForm;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,52 +18,34 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ApiController {
 
-    private final SmartValidator validator;
-    private final SpringTemplateEngine templateEngine;
-
-    @GetMapping("/api/v1/validation")
-	public Map<String, String> getValidation() {
-
-        // 画面表示のためのDTOを作成する
-        ValidationDto validationDto = new ValidationDto();
-        validationDto.setChildList(new ArrayList<ChildDto>());
-        validationDto.getChildList().add(new ChildDto());
-        validationDto.getChildList().add(new ChildDto());
-        validationDto.getChildList().stream().forEach(child -> {
-            child.setGrandChildList(new ArrayList<GrandChildDto>());
-            child.getGrandChildList().add(new GrandChildDto());
-            child.getGrandChildList().add(new GrandChildDto());
-        });
-
-        // thymeleafでレンダリングした結果をJSONとして返却する
-        Context context = new Context();
-        context.setVariable("validationDto", validationDto);
-        String html = templateEngine.process("parts/validationArea :: validationArea", context);
-        Map<String, String> response = Map.of("html", html);
-        return response;
-    }
+    /** バリデーションユーティリティ */
+    private final ValidationUtil validationUtil;
 
     @PostMapping("/api/v1/validation")
-	public Map<String, String> postValidation(@RequestBody ValidationDto validationDto,
+    public ResponseEntity<Map<String, Object>> postValidationByForm(
+            @ModelAttribute ValidationForm validationForm,
             BindingResult bindingResult) {
+            // @RequestBody ValidationForm validationForm) {
 
         // バリデーションを実行する
-        validator.validate(validationDto, bindingResult);
+        // BindingResult bindingResult = new BeanPropertyBindingResult(validationForm, "validationForm");
+        var errMsgMap = validationUtil.validate(validationForm, bindingResult);
+        if (errMsgMap.isEmpty()) {
 
-        // バリデーション結果も含め、thymeleafのテンプレートエンジンでHTMLをレンダリングする
-        Context context = new Context();
-        context.setVariable("validationDto", validationDto);
-        String html = templateEngine.process("parts/validationArea :: validationArea", context);
-        Map<String, String> response = Map.of("html", html);
+            // ステータス(正常)をレスポンスに設定し、呼び出し側に返却する
+            Map<String, Object> response = new HashMap<>();
+            response.put("status", "ok");
+            return ResponseEntity.ok(response);
 
-        // バリデーションエラーがある場合、エラーメッセージを表示するために、再度画面を表示する
-        if (bindingResult.hasErrors()) {
+        } else {
 
-            // エラーがある場合はエラーメッセージを表示するため、再度同じ画面を表示する
-            return response;
+            // ステータスとエラー情報をレスポンスに設定する
+            Map<String, Object> response = new HashMap<>();
+            response.put("status", "error");
+            response.put("errors", errMsgMap);
+
+            // レスポンスを返却する
+            return ResponseEntity.badRequest().body(response);
         }
-
-        // 遷移先画面名を呼び出し側に返却する
-		return response;
 	}
 }

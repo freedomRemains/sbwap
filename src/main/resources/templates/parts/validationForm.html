@@ -1,4 +1,7 @@
-      <div id="validationArea" th:fragment="validationArea(validationDto)">
+  <div th:fragment="validationForm">
+    <form id="validationForm" th:action="@{/validation}" th:object="${validationForm}" method="post">
+      <a th:href="@{/top}">TOP画面に戻る。</a>
+      <div>
         <div>
           <label>親の名前：</label>
           <input type="text" th:field="*{name}" />
@@ -24,3 +27,13 @@
           <li th:each="err : ${#fields.errors('*')}" th:text="${err}">エラー表示</li>
         </ul>
       </div>
+
+      <input type="submit" value="Submit" />
+    </form>
+
+    <button id="btnCallApi">API呼び出し</button>
+    <div id="resultMessage"></div>
+    <div>
+      <textarea id="errorMessage" rows="10" cols="50" readonly></textarea>
+    </div>
+  </div>
