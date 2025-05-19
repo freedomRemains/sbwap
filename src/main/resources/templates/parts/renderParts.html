@@ -1,0 +1,10 @@
+    <div id="renderTarget" th:fragment="renderParts">
+      <form id="renderForm" method="post" th:object="${renderItems}">
+        <div id="dispArea">
+          入力値：<input type="text" name="inputValue"><br />
+          【サーバ到達確認】入力値：<span th:text="${renderItems.inputValue}"></span><br />
+          <span id="renderError" th:text="${renderItems.renderError}"></span><br />
+        </div>
+        <input type="submit" name="submitRender" value="レンダリングAPI呼び出し">
+      </form>
+    </div>

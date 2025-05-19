@@ -5,7 +5,7 @@ plugins {
 	id 'java'
 
 	// SpringBootを使用するための設定
-	id 'org.springframework.boot' version '3.4.1'
+	id 'org.springframework.boot' version '3.4.5'
 
 	// 依存関係管理を使用するための設定
 	id 'io.spring.dependency-management' version '1.1.6'

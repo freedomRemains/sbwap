@@ -23,3 +23,4 @@ SpringBoot Web Application
 - [【ToDo】ビルド手順](md/build.md)
 - [【ToDo】JUnit](md/junit.md)
 - [バリデーションについて](md/validation.md)
+- [APIの返却JSONに、thymeleafレンダリングしたHTMLを載せる方法](md/thymeleafJson.md)
