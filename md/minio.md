@@ -1,20 +1,9 @@
-version: '3.8'
+---
+# MinIOの使い方
 
-# サービスを定義する
-services:
+- 「docker-compose.yml」に、MinIOの起動設定を追加する。
 
-  # redisの設定
-  redis:
-
-    # イメージの指定
-    image: redis:latest
-
-    # ポートの設定
-    ports:
-
-      # ホスト側の 6379 ポートを、コンテナ側の 6379 ポートにマッピングする
-      - "6379:6379"
-
+```docker
   # MinIOの設定
   minio:
 
@@ -28,8 +17,8 @@ services:
     ports:
 
       # API用には9000ポート、管理コンソール用には9001ポートを使用
-      - "9000:9000"   # API用
-      - "9001:9001"   # 管理コンソール用
+      - "9000:9000"
+      - "9001:9001"
 
     # 環境変数の設定
     environment:
@@ -74,4 +63,18 @@ volumes:
 
   # MinIOのデータを永続化するためのボリューム
   minio_data:
-  
+```
+
+- SpringBootでMinIOにアクセスするためには、「build.gradle」に次の設定を追加する。
+
+```Gradle
+	// AWS S3(AWS SDK)を使用するための設定
+	implementation 'software.amazon.awssdk:s3:2.25.33'
+	implementation 'software.amazon.awssdk:auth:2.25.33'
+```
+
+
+- 次のMinIOユーティリティを経由して、アップロード／ダウンロードといった操作を行う。
+
+```Java
+```
