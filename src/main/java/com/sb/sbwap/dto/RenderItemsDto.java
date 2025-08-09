@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class RenderItemsDto {
 
-	private String inputValue;
-	private String renderError;
+    private String inputValue;
+    private String renderError;
 }

@@ -14,28 +14,23 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 @ApiResponses({
-		@ApiResponse(
-				responseCode = "500", 
-				description = "Internal server error",
-				content = @Content(schema = @Schema(implementation = CommonResponseDto.class))),
-		@ApiResponse(
-				responseCode = "400", 
-				description = "Bad request",
-				content = @Content(schema = @Schema(implementation = CommonResponseDto.class)))
+        @ApiResponse(responseCode = "500", description = "Internal server error",
+                content = @Content(schema = @Schema(implementation = CommonResponseDto.class))),
+        @ApiResponse(responseCode = "400", description = "Bad request",
+                content = @Content(schema = @Schema(implementation = CommonResponseDto.class)))
 })
 @RestController
 @RequiredArgsConstructor
 public class AccountRestController {
 
-	@Operation(description = "アカウント取得API")
-	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "OK",
-					content = @Content(
-							schema = @Schema(implementation = AccountDto.class))),
-	})
-	@GetMapping("/account")
-	public AccountDto getAccount() {
-		AccountDto accountDto = new AccountDto();
-		return accountDto;
-	}
+    @Operation(description = "アカウント取得API")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK", 
+                    content = @Content(schema = @Schema(implementation = AccountDto.class))),
+    })
+    @GetMapping("/account")
+    public AccountDto getAccount() {
+        AccountDto accountDto = new AccountDto();
+        return accountDto;
+    }
 }

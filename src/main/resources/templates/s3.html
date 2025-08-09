@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>S3</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+  </head>
+  <body>
+    <h1>S3</h1>
+
+    <table border="1">
+      <tbody>
+        <tr>
+          <td><a th:href="@{/s3/upload}">S3にアップロード</a></td>
+          <td><a th:href="@{/s3/download}">S3からダウンロード</a></td>
+          <td><a th:href="@{/s3/delete}">S3から削除</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+        サーバから受信した fileNames の値は以下の通りです。
+    </p>
+    <p>
+        <span th:text="${fileNames}"></span>
+    </p>
+
+    <script th:src="@{/js/common.js}"></script>
+  </body>
+</html>

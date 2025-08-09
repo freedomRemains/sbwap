@@ -24,7 +24,7 @@ public class ValidationController {
     private final SmartValidator validator;
 
     @GetMapping("/validation")
-	public String getValidation(Model model) {
+    public String getValidation(Model model) {
 
         // 画面表示のため、モデルにDTOを設定する
         ValidationForm validationForm = new ValidationForm();
@@ -40,7 +40,7 @@ public class ValidationController {
 
         // 遷移先画面名を呼び出し側に返却する
         return "validation";
-	}
+    }
 
     @PostMapping("/validation")
     public String postValidation(@ModelAttribute ValidationForm validationForm,
@@ -56,6 +56,6 @@ public class ValidationController {
         }
 
         // 遷移先画面名を呼び出し側に返却する
-		return "top";
-	}
+        return "top";
+    }
 }
