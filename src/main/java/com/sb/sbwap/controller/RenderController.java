@@ -12,14 +12,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RenderController {
 
-	@GetMapping("/render")
-	public String getRender(Model model) {
+    @GetMapping("/render")
+    public String getRender(Model model) {
 
-		// モデルに画面表示用のDTOを設定する
-		RenderItemsDto renderItemsDto = new RenderItemsDto();
-		model.addAttribute("renderItems", renderItemsDto);
+        // モデルに画面表示用のDTOを設定する
+        RenderItemsDto renderItemsDto = new RenderItemsDto();
+        model.addAttribute("renderItems", renderItemsDto);
 
         // 遷移先画面名を呼び出し側に返却する
         return "render";
-	}
+    }
 }

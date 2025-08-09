@@ -1,6 +1,5 @@
 package com.sb.sbwap.dto;
 
-
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 

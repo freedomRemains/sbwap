@@ -11,17 +11,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LoginController {
 
-	@GetMapping("/login")
-	public String getLogin() {
-		return "login";
-	}
+    @GetMapping("/login")
+    public String getLogin() {
+        return "login";
+    }
 
-	@GetMapping("/top")
-	public String getTop(HttpSession session) {
+    @GetMapping("/top")
+    public String getTop(HttpSession session) {
 
-		// redisセッションに情報を書き込む
-		session.setAttribute("redisSessionKey", "This is redis session test.");
+        // redisセッションに情報を書き込む
+        session.setAttribute("redisSessionKey", "This is redis session test.");
 
-		return "top";
-	}
+        return "top";
+    }
 }

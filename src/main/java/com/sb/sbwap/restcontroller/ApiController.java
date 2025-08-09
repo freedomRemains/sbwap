@@ -32,10 +32,11 @@ public class ApiController {
     public ResponseEntity<Map<String, Object>> postValidationByForm(
             @ModelAttribute ValidationForm validationForm,
             BindingResult bindingResult) {
-            // @RequestBody ValidationForm validationForm) {
+        // @RequestBody ValidationForm validationForm) {
 
         // バリデーションを実行する
-        // BindingResult bindingResult = new BeanPropertyBindingResult(validationForm, "validationForm");
+        // BindingResult bindingResult = new BeanPropertyBindingResult(validationForm,
+        // "validationForm");
         var errMsgMap = validationUtil.validate(validationForm, bindingResult);
         if (errMsgMap.isEmpty()) {
 
@@ -54,7 +55,7 @@ public class ApiController {
             // レスポンスを返却する
             return ResponseEntity.badRequest().body(response);
         }
-	}
+    }
 
     @PostMapping("/api/v1/render")
     public ResponseEntity<Map<String, Object>> postRender(@RequestBody Map<String, Object> requestBody) {
