@@ -7,7 +7,9 @@
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
   </head>
   <body>
-    <h1>バリデーション</h1>
+    <h1>部分レンダリング</h1>
+
+    <a th:href="@{/top}">TOP画面に戻る。</a>
 
     <div th:replace="~{parts/renderParts :: renderParts}"></div>
 

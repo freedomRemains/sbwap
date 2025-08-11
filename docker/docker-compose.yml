@@ -15,6 +15,20 @@ services:
       # ホスト側の 6379 ポートを、コンテナ側の 6379 ポートにマッピングする
       - "6379:6379"
 
+  # mailhogの設定
+  mail:
+
+    # コンテナ名
+    container_name: image_mailhog
+
+    # イメージは mailhog の最新版とする
+    image: mailhog/mailhog:latest
+
+    # ポート設定
+    ports:
+      - 1025:1025
+      - 8025:8025
+
   # MinIOの設定
   minio:
 
