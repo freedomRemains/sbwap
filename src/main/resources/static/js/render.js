@@ -4,6 +4,14 @@ document.getElementById('renderForm').addEventListener('submit', async function(
     // デフォルトの挙動を抑止する(フォーム送信を抑止)
     event.preventDefault();
 
+    // CSRFトークンを取得する
+    const csrfToken = document
+            .querySelector('meta[name="_csrf"]')
+            .getAttribute("content");
+    const csrfHeader = document
+            .querySelector('meta[name="_csrf_header"]')
+            .getAttribute("content");
+
     // フォームのデータをJSONに変換する
     const form = event.target;
     const formData = new FormData(form);
@@ -14,9 +22,12 @@ document.getElementById('renderForm').addEventListener('submit', async function(
 
     try {
         // APIを呼び出す
-        const response = await fetch('http://localhost:8080/api/v1/render', {
+        const response = await fetch('/api/v1/render', {
             method: 'POST',
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                [csrfHeader]: csrfToken,
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(jsonData)
         });
 
