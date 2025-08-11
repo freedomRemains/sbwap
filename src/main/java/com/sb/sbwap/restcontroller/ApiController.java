@@ -30,13 +30,10 @@ public class ApiController {
 
     @PostMapping("/api/v1/validation")
     public ResponseEntity<Map<String, Object>> postValidationByForm(
-            @ModelAttribute ValidationForm validationForm,
+            @RequestBody ValidationForm validationForm,
             BindingResult bindingResult) {
-        // @RequestBody ValidationForm validationForm) {
 
         // バリデーションを実行する
-        // BindingResult bindingResult = new BeanPropertyBindingResult(validationForm,
-        // "validationForm");
         var errMsgMap = validationUtil.validate(validationForm, bindingResult);
         if (errMsgMap.isEmpty()) {
 

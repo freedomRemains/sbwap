@@ -3,14 +3,15 @@
   <head>
     <title>バリデーション</title>
     <link rel="stylesheet" th:href="@{/css/common.css}">
-    <meta name="_csrf" content="${_csrf.token}"/>
-    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
   </head>
   <body>
     <h1>バリデーション</h1>
 
     <div th:replace="~{parts/renderParts :: renderParts}"></div>
 
+    <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/render.js}"></script>
   </body>
 </html>
