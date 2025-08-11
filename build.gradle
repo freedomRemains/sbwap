@@ -102,9 +102,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.session:spring-session-data-redis'
 
-	// Mockitoを使用するための設定
-	testImplementation 'org.mockito:mockito-core:5.14.2'
-
 	// SpringDocを使用するための設定
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
 

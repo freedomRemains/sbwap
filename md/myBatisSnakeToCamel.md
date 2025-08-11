@@ -1,4 +1,9 @@
 ---
-# 【ToDo】MyBatisでスネーク記法のDBカラム名をキャメル記法のエンティティに対応させる方法
+# MyBatisでスネーク記法のDBカラム名をキャメル記法のエンティティに対応させる方法
 
-- 【ToDo】サンプルはあるので、必要な設定を記述。
+- 「application.properties」に次の設定を記述する。
+
+```
+## MyBatis settings
+mybatis.configuration.map-underscore-to-camel-case=true
+```
