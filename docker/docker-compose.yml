@@ -29,6 +29,35 @@ services:
       - 1025:1025
       - 8025:8025
 
+  # SFTPサーバの設定
+  sftp:
+
+    # イメージの指定
+    image: atmoz/sftp
+
+    # コンテナ名の設定
+    container_name: sftp-server
+
+    # ポートの設定
+    ports:
+
+      # ホストの 2222 ポートを、コンテナの 22 ポートにマッピングする
+      - "2222:22"
+
+    # ボリュームの設定
+    volumes:
+
+      # SFTPサーバ側は /home/develop/upload が自動で作られるので、ホストの ./upload ディレクトリをマウントする
+      - ./upload:/home/develop/upload
+
+    # ユーザー名:パスワード:UID[:GID][:ディレクトリ]でSFTPユーザを作成する
+    # 複数ユーザにしたい場合は半角スペース1文字を入れて設定を列挙する
+    # ＜例＞ foo:pass:1001 bar:pass:1002
+    command: develop:develop:1001
+
+    # dockerを落とす以外は、落ちたら再起動する
+    restart: unless-stopped
+
   # MinIOの設定
   minio:
 
@@ -88,4 +117,3 @@ volumes:
 
   # MinIOのデータを永続化するためのボリューム
   minio_data:
-  
