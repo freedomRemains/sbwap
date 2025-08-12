@@ -120,7 +120,7 @@ public class S3Config {
 }
 ```
 
-- 次のMinIOユーティリティを経由して、アップロード／ダウンロードといった操作を行う。
+- 次のAWS S3ユーティリティを経由して、アップロード／ダウンロードといった操作を行う。
 
 ```Java
 package com.sb.sblib.util;
@@ -193,18 +193,6 @@ public class AwsS3Util {
                 .key(s3FilePath)
                 .build();
         s3Client.putObject(request, localFile.toPath());
-    }
-
-    // 2. ファイルダウンロード
-    public void downloadFile(String bucket, String key, File destFile) throws IOException {
-        GetObjectRequest request = GetObjectRequest.builder()
-                .bucket(bucket)
-                .key(key)
-                .build();
-        try (ResponseInputStream<GetObjectResponse> s3Obj = s3Client.getObject(request);
-                FileOutputStream fos = new FileOutputStream(destFile)) {
-            s3Obj.transferTo(fos);
-        }
     }
 
     /**
