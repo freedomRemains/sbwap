@@ -1,3 +1,6 @@
+### Git submodule settings ##
+.gitmodules
+
 HELP.md
 .gradle
 build/
