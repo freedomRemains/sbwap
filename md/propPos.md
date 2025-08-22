@@ -1,6 +1,8 @@
 ---
 # プロパティファイルの配置について
 
+[TOPに戻る](../README.md)
+
 - 「application.properties」は、親となるWebアプリ側にのみ配置する。  
   (　「custom.properties」のような、従属するプロパティファイルも同様)
 - ただし従属するプロジェクト側を単独のGradleプロジェクトとし、ビルドに  

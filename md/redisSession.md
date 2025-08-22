@@ -1,6 +1,10 @@
 ---
 # redisによるセッション情報の共有
+
+[TOPに戻る](../README.md)
+
 - 「build.gradle」に次の設定を追加する。(SpringSecurityはコンフィグクラスの実装で使う)
+
 ```
 [build.gradle]
 

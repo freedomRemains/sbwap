@@ -1,6 +1,8 @@
 ---
 # 子プロジェクトの配置方法
 
+[TOPに戻る](../README.md)
+
 ```
 [settings.gradle]
 

@@ -1,6 +1,8 @@
 ---
 # APIの返却JSONに、thymeleafレンダリングしたHTMLを載せる方法
 
+[TOPに戻る](../README.md)
+
 - APIで部分レンダリングするHTML箇所をfragmentとした親HTMLを作成する。
 
 ```html
@@ -25,6 +27,7 @@
 ```
 
 - 部分レンダリングするfragmentのHTML部品を作成する。
+
 ```html
 【sbwap/src/main/resources/templates/parts/renderParts.html】
 
@@ -41,6 +44,7 @@
 ```
 
 - HTMLに対応するthymeleafレンダリングのコントローラを追加する。
+
 ```Java
 package com.sb.sbwap.controller;
 
@@ -70,6 +74,7 @@ public class RenderController {
 ```
 
 - thymeleafとコントローラの間でやり取りするDTOクラスを追加する。
+
 ```Java
 package com.sb.sbwap.dto;
 
@@ -84,6 +89,7 @@ public class RenderItemsDto {
 ```
 
 - RestControllerにAPIを追加する。
+
 ```Java
 @RestController
 @RequiredArgsConstructor
