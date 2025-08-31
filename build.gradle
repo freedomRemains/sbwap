@@ -77,7 +77,7 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
 	// h2DBを使用するための設定
-	implementation 'com.h2database:h2'
+	runtimeOnly 'com.h2database:h2'
 
 	// lombokを使用するための設定
 	annotationProcessor 'org.projectlombok:lombok'
