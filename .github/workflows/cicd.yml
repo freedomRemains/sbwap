@@ -68,8 +68,9 @@ jobs:
 
       # Gradleビルドコマンドで、ビルド＋全テストを実施する
       - name: Build with Gradle
-        run: chmod +x gradlew
-        run: ./gradlew build
+        run: |
+          chmod +x gradlew
+          ./gradlew build
 
       # -------------------------------------------------------------------------------- #
       # CI設定はここまで(ビルドまで)。
