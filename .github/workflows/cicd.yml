@@ -6,7 +6,7 @@ on:
 
   # developブランチへのpush時
   push:
-    branches: [ "feature/19", "develop" ]
+    branches: [ "develop" ]
 
   # developブランチへのプルリクエスト作成時
   pull_request:
