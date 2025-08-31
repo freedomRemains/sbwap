@@ -37,8 +37,8 @@ jobs:
         uses: actions/checkout@v4
 
         # Gitサブモジュールを利用する(子プロジェクトあり)
-        with:
-          submodules: true
+#        with:
+#          submodules: true
 
       # JDKをセットアップする(ここではJava17を使う)
       - name: Set up JDK 17
