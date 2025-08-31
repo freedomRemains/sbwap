@@ -80,6 +80,7 @@ jobs:
 
       # docker composeコマンドにより、dockerを起動する。
       - name: Start docker-compose
+        run: |
           docker compose -f ./docker/docker-compose.yml up -d
           docker ps -a  # デバッグ用に起動確認の docker ps コマンドを発行
 
