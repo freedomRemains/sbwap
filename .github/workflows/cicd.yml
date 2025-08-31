@@ -27,6 +27,28 @@ jobs:
     # 当該ジョブの実行環境はUbuntuの最新イメージ上とする
     runs-on: ubuntu-latest
 
+#    # 起動するdockerサービスを定義する
+#    services:
+#
+#      # redisの設定
+#      redis:
+#
+#        # イメージの指定
+#        image: redis:latest
+#
+#        # ポートの設定
+#        ports:
+#
+#          # ホスト側の 6379 ポートを、コンテナ側の 6379 ポートにマッピングする
+#          - "6379:6379"
+#
+#        # redisのオプション設定
+#        options: >-
+#          --health-cmd "redis-cli ping || exit 1"
+#          --health-interval 10s
+#          --health-timeout 5s
+#          --health-retries 5
+
     # ジョブ内ステップの定義
     steps:
 
@@ -37,8 +59,8 @@ jobs:
         uses: actions/checkout@v4
 
         # Gitサブモジュールを利用する(子プロジェクトあり)
-#        with:
-#          submodules: true
+        with:
+          submodules: true
 
       # JDKをセットアップする(ここではJava17を使う)
       - name: Set up JDK 17
@@ -69,6 +91,11 @@ jobs:
       # Gradleビルドコマンドで、ビルド＋全テストを実施する
       - name: Build with Gradle
         run: |
+
+          # docker-compose.ymlによりdockerを起動する
+          docker compose -f ./docker/docker-compose.yml up -d
+
+          # gradlewファイルに実行権限を付与し、Gradleビルドを実行する
           chmod +x gradlew
           ./gradlew build
 
