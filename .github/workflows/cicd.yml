@@ -1,0 +1,93 @@
+# CI/CD設定(nameは表題やコメントのようなもので、必須ではない)
+name: CICD
+
+# 次のタイミングで起動する
+on:
+
+  # developブランチへのpush時
+  push:
+    branches: [ "feature/19", "develop" ]
+
+  # developブランチへのプルリクエスト作成時
+  pull_request:
+    branches: [ "develop" ]
+
+# ジョブ(ワークフロー内で実行する作業のまとまり)の定義
+jobs:
+
+  # ビルド設定(buildはjobs配下のジョブ名に該当する、任意の文字列としてよい)
+  build:
+
+    # 当該ジョブの実行環境はUbuntuの最新イメージ上とする
+    runs-on: ubuntu-latest
+
+    # ジョブ内ステップの定義
+    steps:
+
+      # ソースコードを取得する
+      - name: Checkout repository
+
+        # GitHubActionsが用意しているcheckoutの仕組みで資材を取得する
+        uses: actions/checkout@v4
+
+        # Gitサブモジュールを利用する(子プロジェクトあり)
+        with:
+          submodules: true
+
+      # JDKをセットアップする(ここではJava17を使う)
+      - name: Set up JDK 17
+
+        # GitHubActionsが用意しているJDKセットアップの仕組みを利用する
+        uses: actions/setup-java@v4
+
+        # Javaのバージョンは17、ディストリビューションはtemurinを利用する
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # Gradle依存関係のキャッシュ設定
+      - name: Cache Gradle packages
+
+        # GitHubActionsが用意している依存関係キャッシュの仕組みを利用する
+        uses: actions/cache@v4
+
+        # Gradleキャッシュ、ラッパーを使う(毎回ゼロからGardleビルドしないための、お約束の書き方)
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      # Gradleビルドコマンドで、ビルド＋全テストを実施する
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      # -------------------------------------------------------------------------------- #
+      # CI設定はここまで(ビルドまで)。
+      # 以降はCD設定。(dockerイメージビルド及びリポジトリへの配置)
+      # -------------------------------------------------------------------------------- #
+
+#      # DockerHubへログインする
+#      - name: Log in to DockerHub
+#
+#        # GitHubActionsが用意しているdockerアクセスの仕組みを利用する
+#        uses: docker/login-action@v3
+#
+#        # DockerHubのユーザ名及びパスワードはGitHubActionsのsecretsから取得する
+#        with:
+#          username: ${{ secrets.DOCKERHUB_USERNAME }}
+#          password: ${{ secrets.DOCKERHUB_TOKEN }}
+#
+#      # dockerイメージのビルド及びDockerHubへのイメージ格納(push)
+#      - name: Build and push Docker image
+#
+#        # GitHubActionsが用意しているdockerイメージビルドの仕組みを利用する
+#        uses: docker/build-push-action@v5
+#
+#        # コンテキストはカレントディレクトリ、DockerHubへpushし、タグを付与する
+#        with:
+#          context: .
+#          push: true
+#          tags: your-dockerhub-username/sbwap:latest
