@@ -7,7 +7,7 @@ env:
   # Javaバージョン
   JAVA_VERSION: '17'
 
-# 次のタイミングで起動する
+# このGitHubActionsは、次のタイミングで起動する
 on:
 
   # developブランチへのpush時
@@ -27,22 +27,12 @@ jobs:
     # 当該ジョブの実行環境はUbuntuの最新イメージ上とする
     runs-on: ubuntu-latest
 
-#    # 起動するdockerサービスを定義する
+#    # GitHubActionsの「ubuntu-latest」はデフォルトでdockerを持っているので、次のように記述することもできる。
 #    services:
-#
-#      # redisの設定
 #      redis:
-#
-#        # イメージの指定
 #        image: redis:latest
-#
-#        # ポートの設定
 #        ports:
-#
-#          # ホスト側の 6379 ポートを、コンテナ側の 6379 ポートにマッピングする
 #          - "6379:6379"
-#
-#        # redisのオプション設定
 #        options: >-
 #          --health-cmd "redis-cli ping || exit 1"
 #          --health-interval 10s
@@ -88,16 +78,34 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      # docker composeコマンドにより、dockerを起動する。
+      - name: Start docker-compose
+          docker compose -f ./docker/docker-compose.yml up -d
+          docker ps -a  # デバッグ用に起動確認の docker ps コマンドを発行
+
+      # docker配下の各ツールの起動完了を待機する
+      - name: Wait for services to be ready
+        run: |
+
+          # redisは docker ps コマンドでコンテナIDを取得し、内部でredis-cliにて ping に返信があるまで待機
+          until docker exec $(docker ps -qf "ancestor=redis:latest") redis-cli ping | grep PONG; do sleep 3; done
+
+          # Minioについてはヘルスチェック応答があるまで待機することで、起動を確認する (APIポート9000)
+          until curl -s http://localhost:9000/minio/health/ready; do sleep 3; done
+          echo "All services are ready!"
+
       # Gradleビルドコマンドで、ビルド＋全テストを実施する
       - name: Build with Gradle
         run: |
 
-          # docker-compose.ymlによりdockerを起動する
-          docker compose -f ./docker/docker-compose.yml up -d
-
           # gradlewファイルに実行権限を付与し、Gradleビルドを実行する
           chmod +x gradlew
           ./gradlew build
+
+      # 後処理として、doker compose downコマンドを実行してdockerを落とす
+      - name: Stop docker-compose
+        if: always()
+        run: docker compose -f ./docker/docker-compose.yml down
 
       # -------------------------------------------------------------------------------- #
       # CI設定はここまで(ビルドまで)。
