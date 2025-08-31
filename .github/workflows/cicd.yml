@@ -1,6 +1,12 @@
 # CI/CD設定(nameは表題やコメントのようなもので、必須ではない)
 name: CICD
 
+# 環境変数宣言
+env:
+
+  # Javaバージョン
+  JAVA_VERSION: '17'
+
 # 次のタイミングで起動する
 on:
 
@@ -42,7 +48,7 @@ jobs:
 
         # Javaのバージョンは17、ディストリビューションはtemurinを利用する
         with:
-          java-version: '17'
+          java-version: ${{ env.JAVA_VERSION }}
           distribution: 'temurin'
 
       # Gradle依存関係のキャッシュ設定
