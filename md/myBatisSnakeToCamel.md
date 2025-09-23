@@ -1,6 +1,8 @@
 ---
 # MyBatisでスネーク記法のDBカラム名をキャメル記法のエンティティに対応させる方法
 
+[TOPに戻る](../README.md)
+
 - 「application.properties」に次の設定を記述する。
 
 ```
