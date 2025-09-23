@@ -1,6 +1,8 @@
 ---
 # プロパティファイルの記述内容について
 
+[TOPに戻る](../README.md)
+
 - 「application.properties」にはSpringBootの起動時に読み込む設定を記述する。  
   (デフォルトの挙動を変えたいときに、SpringBootが持っているプロパティの設定を  
   個別に指定するための設定ファイル)

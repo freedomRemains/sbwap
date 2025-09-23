@@ -1,6 +1,10 @@
 ---
 # SpringDocの使用方法
+
+[TOPに戻る](../README.md)
+
 「build.gradle」にSpringDocを使用するための設定記述が必要。
+
 ```
 [build.gradle]
 
@@ -17,6 +21,7 @@
 springdoc.api-docs.path=/api-docs
 springdoc.swagger-ui.path=/swagger-ui.html
 ```
+
 - ブラウザを開き、次のURLにアクセスすると、自動生成されたAPI仕様書が確認できる。  
 http://localhost:8080/swagger-ui.html
 - 次のURLにアクセスすると、swaggerのyamlをダウンロードできる。  
