@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>S3</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+  </head>
+  <body>
+    <h1>SpringBatch</h1>
+
+    <a th:href="@{/top}">TOP画面に戻る。</a>
+
+    <table border="1">
+      <tbody>
+        <tr>
+          <td><a th:href="@{/batch/taskletA}">タスクレットAを実行</a></td>
+          <td><a th:href="@{/batch/taskletB}">タスクレットBを実行</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <script th:src="@{/js/common.js}"></script>
+  </body>
+</html>
