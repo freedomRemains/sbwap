@@ -1,0 +1,77 @@
+---
+# ログについて
+
+[TOPに戻る](../README.md)
+
+- 「@Slf4j」でログ記録している場合、「application.properties」でもログファイル名等のログ設定が可能。
+- 特定のログだけを別ファイルに出力するといった細かい要件に対応する場合は、「logback-spring.xml」でログの詳細を指定できる。
+
+ログ設定のサンプルは、次の通り。
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- 共通で使うログパターンを変数化 -->
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n" />
+
+    <!-- ログファイルのディレクトリを変数化 -->
+    <property name="LOG_DIR" value="logs" />
+
+    <!-- コンソール出力用のアペンダ -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+
+        <!-- エンコーダ設定 -->
+        <encoder>
+
+            <!-- ログのフォーマット -->
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ファイル出力用のアペンダ -->
+    <appender name="LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <!-- 出力ファイル設定 -->
+        <file>${LOG_DIR}/app.log</file>
+
+        <!-- ログローテーションのポリシー -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+
+            <!-- 日ごとにログをローテーション -->
+            <fileNamePattern>logs/app.%d{yyyy-MM-dd}.log</fileNamePattern>
+
+            <!-- 保持期間を30日間に設定 -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <!-- エンコーダ設定 -->
+        <encoder>
+
+            <!-- ログのフォーマット -->
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ルートロガーの設定 -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="LOG_FILE" />
+    </root>
+
+    <!-- MyBatis関連パッケージはDEBUGとする -->
+    <logger name="org.apache.ibatis" level="DEBUG"/>
+    <logger name="org.mybatis" level="DEBUG"/>
+
+    <!-- 共通ライブラリのうち、MyBatisのパッケージはDEBUGとする(SQLログを出力するため) -->
+    <logger name="com.sblib" level="INFO"/>
+    <logger name="com.sblib.mapper" level="DEBUG"/>
+
+    <!-- JDBC の PreparedStatement パラメータを出力 -->
+    <logger name="jdbc.sqlonly" level="DEBUG"/>
+    <logger name="jdbc.sqltiming" level="DEBUG"/>
+    <logger name="jdbc.resultset" level="DEBUG"/>
+    <logger name="jdbc.audit" level="DEBUG"/>
+
+</configuration>
+```
