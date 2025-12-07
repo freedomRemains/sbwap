@@ -42,6 +42,35 @@
         </encoder>
     </appender>
 
+    <!-- com.sb.sbwapパッケージのログのみをファイル出力するためのアペンダ -->
+    <appender name="SBWAP_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <!-- 出力ファイル設定 -->
+        <file>${LOG_DIR}/sbwap.log</file>
+
+        <!-- ログローテーションのポリシー -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+
+            <!-- 日ごとにログをローテーション -->
+            <fileNamePattern>logs/sbwap.%d{yyyy-MM-dd}.log</fileNamePattern>
+
+            <!-- 保持期間を30日間に設定 -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <!-- エンコーダ設定 -->
+        <encoder>
+
+            <!-- ログのフォーマット -->
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- com.sb.sbwapパッケージのログはSBWAP_LOGアペンダに出力 -->
+    <logger name="com.sb.sbwap" level="INFO" additivity="false">
+        <appender-ref ref="SBWAP_LOG" />
+    </logger>
+
     <!-- ルートロガーの設定 -->
     <root level="INFO">
         <appender-ref ref="CONSOLE" />
@@ -53,8 +82,8 @@
     <logger name="org.mybatis" level="DEBUG"/>
 
     <!-- 共通ライブラリのうち、MyBatisのパッケージはDEBUGとする(SQLログを出力するため) -->
-    <logger name="com.sblib" level="INFO"/>
-    <logger name="com.sblib.mapper" level="DEBUG"/>
+    <logger name="com.sb.sblib" level="INFO"/>
+    <logger name="com.sb.sblib.mapper" level="DEBUG"/>
 
     <!-- JDBC の PreparedStatement パラメータを出力 -->
     <logger name="jdbc.sqlonly" level="DEBUG"/>
