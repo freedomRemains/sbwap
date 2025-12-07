@@ -1,9 +1,0 @@
-2025-12-07 12:13:10 [restartedMain] INFO  com.sb.sbwap.SbwapApplication - Starting SbwapApplication using Java 21.0.6 with PID 10028 (C:\10_local\60_github\sbwap\build\classes\java\main started by harth in C:\10_local\60_github\sbwap)
-2025-12-07 12:13:10 [restartedMain] INFO  com.sb.sbwap.SbwapApplication - No active profile set, falling back to 1 default profile: "default"
-2025-12-07 12:13:28 [restartedMain] INFO  com.sb.sbwap.SbwapApplication - Started SbwapApplication in 19.034 seconds (process running for 19.98)
-2025-12-07 12:13:42 [http-nio-8080-exec-4] INFO  c.s.sbwap.controller.LoginController - This is an info log message.
-2025-12-07 12:13:42 [http-nio-8080-exec-4] WARN  c.s.sbwap.controller.LoginController - This is a warn log message.
-2025-12-07 12:13:42 [http-nio-8080-exec-4] ERROR c.s.sbwap.controller.LoginController - This is an error log message.
-2025-12-07 12:13:42 [http-nio-8080-exec-4] INFO  com.sb.sbwap - [NOT com.sb.sbwap, BUT logger specified]This is an info log message.
-2025-12-07 12:13:42 [http-nio-8080-exec-4] WARN  com.sb.sbwap - [NOT com.sb.sbwap, BUT logger specified]This is a warn log message.
-2025-12-07 12:13:42 [http-nio-8080-exec-4] ERROR com.sb.sbwap - [NOT com.sb.sbwap, BUT logger specified]This is an error log message.
