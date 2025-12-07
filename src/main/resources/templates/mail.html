@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>SFTP</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+  </head>
+  <body>
+    <h1>mail</h1>
+
+    <a th:href="@{/top}">TOP画面に戻る。</a>
+
+    <table border="1">
+      <tbody>
+        <tr>
+          <td><a th:href="@{/mail/send}">メール送信</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+        <span th:text="${message}"></span>
+    </p>
+
+    <script th:src="@{/js/common.js}"></script>
+  </body>
+</html>
