@@ -11,6 +11,56 @@
 
     <a th:href="@{/top}">TOP画面に戻る。</a>
 
+
+
+    <div id="dropzone"
+         style="width:300px;height:150px;border:2px dashed #888;text-align:center;line-height:150px;">
+        ここにファイルをドロップ
+    </div>
+
+    <script>
+        const dropzone = document.getElementById("dropzone");
+
+        dropzone.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            dropzone.style.borderColor = "blue";
+        });
+
+        dropzone.addEventListener("dragleave", () => {
+            dropzone.style.borderColor = "#888";
+        });
+
+        dropzone.addEventListener("drop", (e) => {
+            e.preventDefault();
+            dropzone.style.borderColor = "#888";
+
+            const file = e.dataTransfer.files[0];
+            uploadFile(file);
+        });
+
+        function uploadFile(file) {
+            const formData = new FormData();
+            formData.append("file", file);
+
+            // Thymeleaf が埋め込んだ CSRF 情報を取得
+            const token = document.querySelector('meta[name="_csrf"]').content;
+            const header = document.querySelector('meta[name="_csrf_header"]').content;
+
+            fetch("/s3/upload/drop", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    [header]: token
+                }
+            })
+            .then(res => res.text())
+            .then(msg => alert(msg))
+            .catch(err => alert("アップロード失敗: " + err));
+        }
+    </script>
+
+
+
     <table border="1">
       <tbody>
         <tr>

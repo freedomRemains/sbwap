@@ -6,6 +6,10 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sb.sblib.util.AwsS3Util;
 
@@ -23,6 +27,19 @@ public class S3Controller {
 
         // AWS S3テストページに遷移する
         return "s3";
+    }
+
+    @PostMapping("/s3/upload/drop")
+    @ResponseBody
+    public String uploadByDrop(@RequestParam("file") MultipartFile file) throws IOException {
+
+        awsS3Util.upload(
+                file.getOriginalFilename(),
+                file.getInputStream(),
+                file.getSize(),
+                file.getContentType());
+
+        return "アップロード完了: " + file.getOriginalFilename();
     }
 
     @GetMapping("/s3/upload")
